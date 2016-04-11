@@ -1,20 +1,13 @@
 package aut.bme.hu.eventr.model;
 
-public class EventModel {
+import java.util.Date;
 
-    private int idx = 0;
+public class EventModel
+{
 
-    public String getNextString() {
-        String[] list = {
-                "ecc", "pecc", "kimehetsz",
-                "holnapután", "bejöhetsz",
-                "cérnára", "cinegére",
-                "ugorj", "cica", "az", "egérre", "fuss!"
-        };
-
-        if (idx == list.length) {
-            idx = 0;
-        }
-        return list[idx++];
+    // TODO
+    public Date getDate()
+    {
+        return new Date();
     }
 }

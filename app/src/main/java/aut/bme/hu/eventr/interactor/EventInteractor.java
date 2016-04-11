@@ -9,11 +9,13 @@ public class EventInteractor {
     @Inject
     EventModel model;
 
-    public EventInteractor() {
+    public EventInteractor()
+    {
         EventRApplication.injector.inject(this);
     }
 
-    public String getString() {
-        return model.getNextString();
+    public String getString()
+    {
+        return model.getDate().toString();
     }
 }

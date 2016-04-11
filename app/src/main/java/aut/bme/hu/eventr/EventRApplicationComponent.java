@@ -2,6 +2,7 @@ package aut.bme.hu.eventr;
 
 import javax.inject.Singleton;
 
+import aut.bme.hu.eventr.interactor.UserInteractor;
 import dagger.Component;
 import aut.bme.hu.eventr.interactor.InteractorModule;
 import aut.bme.hu.eventr.interactor.EventInteractor;
@@ -18,4 +19,6 @@ public interface EventRApplicationComponent {
         void inject(LoginPresenter loginPresenter);
 
         void inject(EventInteractor eventInteractor);
+
+        void inject(UserInteractor userInteractor);
 }
