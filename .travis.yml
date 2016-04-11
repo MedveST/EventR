@@ -25,6 +25,6 @@ deploy:
 notifications:
     email:
         recipients:
-        - myemail@address.com
+        - medve9213@gmail.com
         on_success: always
         on_failure: always
