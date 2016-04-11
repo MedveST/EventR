@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="aut.bme.hu.eventr.view.LoginActivity"
-    tools:showIn="@layout/activity_main"
+    tools:showIn="@layout/activity_login"
     android:orientation="vertical">
 
     <TextView

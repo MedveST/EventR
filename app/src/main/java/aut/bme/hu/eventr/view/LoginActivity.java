@@ -14,7 +14,7 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import aut.bme.hu.eventr.EventRApplication;
-import hu.bme.aut.amorg.examples.eventr.R;
+import aut.bme.hu.eventr.R;
 import aut.bme.hu.eventr.presenter.LoginPresenter;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
@@ -25,13 +25,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         EventRApplication.injector.inject(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
