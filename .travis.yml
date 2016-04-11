@@ -14,10 +14,31 @@ android:
         - addon-google_apis-google-19
         - sys-img-armeabi-v7a-android-21
 
-deploy:
-    provider: releases
-    apikey: $GITHUB_KEY
-    file: app/build/outputs/apk/app-release.apk
-    skip_cleanup: true
-    on:
-        tags: true
+script: ./gradlew :app:build
+
+env:
+    global:
+        - MALLOC_ARENA_MAX=2
+
+sudo: required
+
+befoe_script:
+    - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a -s "768x1280"
+    - emulator -avd test -no-skin -no-audio -no-window &
+    - adb wait-for-device
+    - adb shell input keyevent 82 &
+
+# deploy:
+#     provider: releases
+#     apikey: $GITHUB_KEY
+#     file: app/build/outputs/apk/app-release.apk
+#     skip_cleanup: true
+#     on:
+#         tags: true
+#
+# notifications:
+#     email:
+#         recipients:
+#         -medve9213@gmail.com
+#         on_success: always
+#         on_failure: always
