@@ -1,4 +1,4 @@
-package hu.bme.aut.amorg.examples.eventr;
+package aut.bme.hu.eventr;
 
 import org.junit.Test;
 
