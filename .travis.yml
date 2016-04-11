@@ -14,6 +14,9 @@ android:
         - addon-google_apis-google-19
         - sys-img-armeabi-v7a-android-21
 
+before-install:
+    - chmod +x gradlew
+
 script: ./gradlew :app:build
 
 env:
