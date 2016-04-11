@@ -16,8 +16,4 @@ public class LoginPresenter extends Presenter<LoginView> {
         EventRApplication.injector.inject(this);
     }
 
-    // TODO: remove
-    public void doStuff() {
-        view.showString(interactor.getName());
-    }
 }
