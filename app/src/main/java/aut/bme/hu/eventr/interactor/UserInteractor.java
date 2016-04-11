@@ -5,9 +5,6 @@ import javax.inject.Inject;
 import aut.bme.hu.eventr.EventRApplication;
 import aut.bme.hu.eventr.model.UserModel;
 
-/**
- * Created by Medve on 2016. 04. 11..
- */
 public class UserInteractor {
     @Inject
     UserModel model;

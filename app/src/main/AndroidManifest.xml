@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="aut.bme.hu.eventr"
+<manifest xmlns:tools="http://schemas.android.com/tools"
+          package="aut.bme.hu.eventr"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -13,7 +14,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".view.CalendarActivity"
             android:label="@string/title_activity_calendar"
@@ -32,10 +34,6 @@
             android:name=".view.UpcomingActivity"
             android:label="@string/title_activity_upcoming"
             android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
         </activity>
         <activity
             android:name=".view.LoginActivity"
