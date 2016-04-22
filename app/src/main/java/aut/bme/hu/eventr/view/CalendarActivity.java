@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.Calendar;
+import java.util.List;
 
 import aut.bme.hu.eventr.R;
 
@@ -33,4 +34,23 @@ public class CalendarActivity extends AppCompatActivity implements CalendarView 
         });
     }
 
+    @Override
+    public void selectDay() {
+        // TODO
+    }
+
+    @Override
+    public void navigateToMonth() {
+        // TODO
+    }
+
+    @Override
+    public void highlightDays(List<Long> dates) {
+        // TODO
+    }
+
+    @Override
+    public void unhighlightDay(Long date) {
+        // TODO
+    }
 }

@@ -7,9 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.io.Serializable;
+
+import javax.inject.Inject;
+
 import aut.bme.hu.eventr.R;
+import aut.bme.hu.eventr.model.EventModel;
+import aut.bme.hu.eventr.presenter.ScheduleEventPresenter;
 
 public class ScheduleEventActivity extends AppCompatActivity implements ScheduleEventView {
+
+    @Inject
+    ScheduleEventPresenter scheduleEventPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +38,21 @@ public class ScheduleEventActivity extends AppCompatActivity implements Schedule
                         .setAction("Action", null).show();
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+
+        Serializable eventToEdit = extras.getSerializable("event_to_edit");
+        if (eventToEdit == null)
+        {
+            // TODO from UI elements
+            //scheduleEventPresenter.setupCreate();
+        }
+        else
+        {
+            scheduleEventPresenter.setupEdit((EventModel) eventToEdit);
+        }
+
     }
 
 }

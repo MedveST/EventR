@@ -15,4 +15,9 @@ public class LoginPresenter extends Presenter<LoginView> {
         EventRApplication.injector.inject(this);
     }
 
+    public void loginOrSignUp( String email, String pass )
+    {
+
+    }
+
 }

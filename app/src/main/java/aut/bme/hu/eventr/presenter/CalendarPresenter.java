@@ -13,4 +13,14 @@ public class CalendarPresenter extends Presenter<CalendarView> {
     public CalendarPresenter() {
         EventRApplication.injector.inject(this);
     }
+
+    public void setupHighlights()
+    {
+        // TODO
+    }
+
+    public void selectDate()
+    {
+        // TODO
+    }
 }

@@ -39,9 +39,7 @@ public class ViewModule {
 
     @Provides
     @Singleton
-    public ScheduleEventPresenter getScheduleEventPresenter() {
-        return new ScheduleEventPresenter();
-    }
+    public ScheduleEventPresenter getScheduleEventPresenter() { return new ScheduleEventPresenter(); }
 
     @Provides
     @Singleton

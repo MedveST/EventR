@@ -16,6 +16,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+        debug {
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+
+        mockRelease {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "true"
+        }
+        mockDebug {
+            buildConfigField "boolean", "IS_MOCK", "true"
         }
     }
     lintOptions {
@@ -35,4 +50,6 @@ dependencies {
     compile 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'com.google.dagger:dagger:2.0.1'
     compile 'com.android.support:support-v4:23.3.0'
+    // SugarORM
+    compile 'com.github.satyan:sugar:1.4'
 }
