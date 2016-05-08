@@ -1,0 +1,149 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: EventR API
+  description: Mobilszoftver Labor HF - EventR API
+  version: "1.0.0"
+# the domain of the service
+host: api.eventr.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  
+  /events:
+    get:
+      summary: Event List
+      description: The Events endpoint returns a list of upcoming events for a specific user.
+      parameters:
+        - name: userid
+          in: query
+          description: UserId belonging to the user we want to get the upcoming events of.
+          required: true
+          type: number
+          format: long
+      tags:
+        - Events
+      responses:
+        200:
+          description: An array of events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /login:
+    get:
+      summary: User Login
+      description: The User Login endpoint returns the information associated with the User identified by the e-mail address and password. Users are created if necessary.
+      tags:
+        - Users
+      responses:
+        200:
+          description: Information of a user
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /createEvent:
+    get:
+      summary: Create Event
+      description: The Save Event endpoint stores the information about an event.
+      parameters:
+        - name: title
+          in: query
+          description: Title/Short description of the event we are creating
+          required: true
+          type: string
+        - name: date
+          in: query
+          description: Date and time of the start of the event we are creating
+          required: true
+          type: string
+          format: date-time
+      tags:
+        - Events
+      responses:
+        200:
+          description: Created event
+          schema:
+            $ref: '#/definitions/Event'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /modifyEvent:
+    get:
+      summary: Create Event
+      description: The Modify Event endpoint modifies information about an event.
+      parameters:
+        - name: title
+          in: query
+          description: Title/Short description of the event we are creating
+          required: true
+          type: string
+        - name: date
+          in: query
+          description: Date and time of the start of the event we are creating
+          required: true
+          type: string
+          format: date-time
+      tags:
+        - Events
+      responses:
+        200:
+          description: Modified event
+          schema:
+            $ref: '#/definitions/Event'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Event:
+    type: object
+    properties:
+      id:
+        type: number
+        format: long
+        description: Unique identifier representing a specific product event
+      title:
+        type: string
+        description: Title/Short description of the event
+      date:
+        type: string
+        format: date-time
+        description: Date and time of the event start
+  User:
+    type: object
+    properties:
+      id:
+        type: number
+        format: long
+        description: Unique identifier representing a specific user
+      email:
+        type: string
+        description: E-mail address of the user
+      pass:
+        type: string
+        description: Password of the user
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string

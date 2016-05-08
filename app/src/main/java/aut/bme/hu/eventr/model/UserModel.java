@@ -1,8 +1,5 @@
 package aut.bme.hu.eventr.model;
 
-import com.orm.dsl.Table;
-
-@Table
 public class UserModel
 {
     private Long id;

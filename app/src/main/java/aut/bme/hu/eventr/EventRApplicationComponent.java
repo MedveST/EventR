@@ -7,6 +7,8 @@ import aut.bme.hu.eventr.presenter.CalendarPresenter;
 import aut.bme.hu.eventr.presenter.ScheduleEventPresenter;
 import aut.bme.hu.eventr.presenter.SettingsPresenter;
 import aut.bme.hu.eventr.presenter.UpcomingPresenter;
+import aut.bme.hu.eventr.repository.MockRepository;
+import aut.bme.hu.eventr.repository.SugarORMRepository;
 import aut.bme.hu.eventr.view.LoginActivity;
 import dagger.Component;
 import aut.bme.hu.eventr.interactor.InteractorModule;
@@ -33,4 +35,8 @@ public interface EventRApplicationComponent {
         void inject(EventInteractor eventInteractor);
 
         void inject(UserInteractor userInteractor);
+
+        void inject(MockRepository mockRepository);
+
+        void inject(SugarORMRepository sugarORMRepository);
 }

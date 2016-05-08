@@ -4,10 +4,13 @@ import javax.inject.Inject;
 
 import aut.bme.hu.eventr.EventRApplication;
 import aut.bme.hu.eventr.model.UserModel;
+import aut.bme.hu.eventr.repository.Repository;
 
 public class UserInteractor {
 
+    private Repository repository;
     private UserModel activeUser;
+
 
     public UserInteractor()
     {
