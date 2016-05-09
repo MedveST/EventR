@@ -3,6 +3,8 @@ package aut.bme.hu.eventr.repository;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 import aut.bme.hu.eventr.EventRApplication;
 
 public class SugarORMRepository implements Repository{
@@ -28,5 +30,10 @@ public class SugarORMRepository implements Repository{
     public Object findById(Class<?> type, Long id)
     {
         return SugarRecord.findById(type, id);
+    }
+
+    @Override
+    public List<?> find(Class<?> type, String clause) {
+        return SugarRecord.find(type, clause);
     }
 }

@@ -1,14 +1,16 @@
 package aut.bme.hu.eventr.repository.mock;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import aut.bme.hu.eventr.EventRApplication;
 import aut.bme.hu.eventr.repository.Repository;
 
 public class MockRepository implements Repository {
     private Long nextId = 0L;
-    private HashMap<Long, Object> database;
+    private HashMap<Long, Object> database = new HashMap<>();
 
     public MockRepository()
     {
@@ -43,5 +45,33 @@ public class MockRepository implements Repository {
     public Object findById(Class<?> type, Long id)
     {
         return database.get(id);
+    }
+
+    // very simple query parsing for one string equals clause
+    @Override
+    public List<?> find(Class<?> type, String clause) {
+        int equalsIndex = clause.indexOf('=');
+        String fieldName = clause.substring(0, equalsIndex);
+        String fieldValue = clause.substring(equalsIndex + 1);
+
+        try {
+            for (Object obj : database.values()) {
+                if (obj.getClass() == type) {
+                    Field field = type.getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    String objectFieldValue = (String)field.get(obj);
+                    if (objectFieldValue == fieldValue) {
+                        List<Object> result = new ArrayList<Object>();
+                        result.add(obj);
+                        return result;
+                    }
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

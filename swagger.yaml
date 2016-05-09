@@ -44,6 +44,17 @@ paths:
     get:
       summary: User Login
       description: The User Login endpoint returns the information associated with the User identified by the e-mail address and password. Users are created if necessary.
+      parameters:
+        - name:
+          in: queryemail
+          description: E-mail address of user
+          required: true
+          type: string
+        - name: pass
+          in: query
+          description: Password of user
+          required: true
+          type: string
       tags:
         - Users
       responses:
