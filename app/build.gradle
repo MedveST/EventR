@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "aut.bme.hu.eventr"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+        debug {
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+
+        mockRelease {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "true"
+        }
+        mockDebug {
+            buildConfigField "boolean", "IS_MOCK", "true"
         }
     }
     lintOptions {
@@ -23,14 +38,41 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:design:23.2.1'
+ext {
+    okhttp_version = "3.0.1"
+    oltu_version = "1.0.0"
+    retrofit_version = "2.0.0-beta3"
+    gson_version = "2.4"
+    swagger_annotations_version = "1.5.0"
+    junit_version = "4.12"
 
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
     // Dagger 2 and Compiler
-    compile "com.google.dagger:dagger-compiler:2.0.1"
-    compile 'com.google.dagger:dagger:2.0.1'
     apt "com.google.dagger:dagger-compiler:2.0.1"
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.google.dagger:dagger-compiler:2.0.1'
+    compile 'com.google.dagger:dagger:2.0.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    // SugarORM
+    compile 'com.github.satyan:sugar:1.4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+
+    compile "com.google.code.gson:gson:$gson_version"
+    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+
+    testCompile "junit:junit:$junit_version"
 }
