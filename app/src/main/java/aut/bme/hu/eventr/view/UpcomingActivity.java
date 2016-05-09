@@ -43,6 +43,6 @@ public class UpcomingActivity extends AppCompatActivity implements UpcomingView 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        upcomingPresenter.detachView(this);
+        upcomingPresenter.detachView();
     }
 }
