@@ -16,6 +16,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+        debug {
+            buildConfigField "boolean", "IS_MOCK", "false"
+        }
+
+        mockRelease {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "IS_MOCK", "true"
+        }
+        mockDebug {
+            buildConfigField "boolean", "IS_MOCK", "true"
         }
     }
     lintOptions {
@@ -26,11 +41,15 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:design:23.2.1'
 
     // Dagger 2 and Compiler
-    compile "com.google.dagger:dagger-compiler:2.0.1"
-    compile 'com.google.dagger:dagger:2.0.1'
     apt "com.google.dagger:dagger-compiler:2.0.1"
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.google.dagger:dagger-compiler:2.0.1'
+    compile 'com.google.dagger:dagger:2.0.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    // SugarORM
+    compile 'com.github.satyan:sugar:1.4'
 }

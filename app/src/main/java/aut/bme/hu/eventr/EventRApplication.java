@@ -3,7 +3,7 @@ package aut.bme.hu.eventr;
 import android.app.Application;
 
 import aut.bme.hu.eventr.view.ViewModule;
-import hu.bme.aut.amorg.examples.eventr.DaggerEventRApplicationComponent;
+import aut.bme.hu.eventr.DaggerEventRApplicationComponent;
 
 public class EventRApplication extends Application {
 

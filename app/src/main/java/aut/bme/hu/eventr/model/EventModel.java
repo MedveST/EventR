@@ -1,20 +1,30 @@
 package aut.bme.hu.eventr.model;
 
-public class EventModel {
+import java.io.Serializable;
 
-    private int idx = 0;
+// Serializable required for passing in a parcel
+public class EventModel implements Serializable
+{
+    private Long id;
+    private String title;
+    private Long date;
 
-    public String getNextString() {
-        String[] list = {
-                "ecc", "pecc", "kimehetsz",
-                "holnapután", "bejöhetsz",
-                "cérnára", "cinegére",
-                "ugorj", "cica", "az", "egérre", "fuss!"
-        };
+    public EventModel(){
+    }
 
-        if (idx == list.length) {
-            idx = 0;
-        }
-        return list[idx++];
+    public EventModel(String title, Long date){
+        this.title = title;
+        this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() { return title; }
+
+    public Long getDate()
+    {
+        return date;
     }
 }
