@@ -21,7 +21,7 @@ public interface EventsApi {
 
     @POST("createEvent")
     Call<EventModel> createEventPost(
-            @Query("title") String title, @Query("date") Date date
+            @Query("userid") BigDecimal userid, @Query("title") String title, @Query("date") Date date
     );
 
 

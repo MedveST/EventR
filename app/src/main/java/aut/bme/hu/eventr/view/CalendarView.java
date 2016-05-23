@@ -2,14 +2,10 @@ package aut.bme.hu.eventr.view;
 
 import java.util.List;
 
+import aut.bme.hu.eventr.model.EventModel;
+
 public interface CalendarView {
 
-    void selectDay();
-
-    void navigateToMonth();
-
-    void highlightDays(List<Long> dates);
-
-    void unhighlightDay(Long date);
+    void createEventOnDay();
 
 }

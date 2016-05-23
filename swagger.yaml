@@ -45,8 +45,8 @@ paths:
       summary: User Login
       description: The User Login endpoint returns the information associated with the User identified by the e-mail address and password. Users are created if necessary.
       parameters:
-        - name:
-          in: queryemail
+        - name: email
+          in: query
           description: E-mail address of user
           required: true
           type: string
@@ -71,6 +71,12 @@ paths:
       summary: Create Event
       description: The Save Event endpoint stores the information about an event.
       parameters:
+        - name: userid
+          in: query
+          description: Id of the user we are adding the event to
+          required: true
+          type: number
+          format: long
         - name: title
           in: query
           description: Title/Short description of the event we are creating
@@ -95,17 +101,23 @@ paths:
             $ref: '#/definitions/Error'
   /modifyEvent:
     post:
-      summary: Create Event
+      summary: Modify Event
       description: The Modify Event endpoint modifies information about an event.
       parameters:
+        - name: id
+          in: query
+          description: Id of the event we are modifying
+          required: true
+          type: number
+          format: long
         - name: title
           in: query
-          description: Title/Short description of the event we are creating
+          description: Title/Short description of the event we are modifying
           required: true
           type: string
         - name: date
           in: query
-          description: Date and time of the start of the event we are creating
+          description: Date and time of the start of the event we are modifying
           required: true
           type: string
           format: date-time
@@ -128,6 +140,10 @@ definitions:
         type: number
         format: long
         description: Unique identifier representing a specific product event
+      userid:
+        type: number
+        format: long
+        description: Unique identifier representing the owner user entity of the event
       title:
         type: string
         description: Title/Short description of the event

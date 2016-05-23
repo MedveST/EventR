@@ -4,11 +4,14 @@ import android.net.Uri;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import aut.bme.hu.eventr.EventRApplication;
 import aut.bme.hu.eventr.model.EventModel;
+import aut.bme.hu.eventr.network.Error;
 import aut.bme.hu.eventr.network.GsonHelper;
 import aut.bme.hu.eventr.network.NetworkConfig;
 import aut.bme.hu.eventr.repository.Repository;
@@ -20,26 +23,6 @@ public class EventMockRequestProcessor {
 
     @Inject
     static Repository eventMockRepository;
-   //static List<Person> peopleList = new ArrayList<>();
-   //static boolean isInitialised = false;
-
-   //public static Person testP1 = new Person("Network Test 1");
-   //public static Person testP2 = new Person("Network Test 2");
-
-    public List<EventModel> events(BigDecimal userId)
-    {
-        return null;
-    }
-
-    public EventModel createEvent(BigDecimal userId)
-    {
-        return null;
-    }
-
-    public EventModel modifyEvent(BigDecimal userId)
-    {
-        return null;
-    }
 
     public static Response process(Request request) {
         Uri uri = Uri.parse(request.url().toString());
@@ -49,31 +32,76 @@ public class EventMockRequestProcessor {
         Headers headers = request.headers();
 
         if (uri.getPath().equals(NetworkConfig.ENDPOINT_PREFIX + "events") && request.method().equals("GET")) {
-            int emailIndex = uri.getPath().indexOf("email") + 6; // len(email=)
-            int emailEndIndex = uri.getPath().indexOf('&', emailIndex);
-            String email = uri.getPath().substring(emailIndex, emailEndIndex);
+            int useridIndex = uri.toString().indexOf("userid") + 7; // len(id=)
+            Long userid = Long.parseLong(uri.toString().substring(useridIndex));
 
-            int passIndex = uri.getPath().indexOf("pass") + 5; // len(pass=)
-            int passEndIndex = uri.getPath().indexOf('&', passIndex);
-            String pass = uri.getPath().substring(passIndex, passEndIndex);
+            List<EventModel> events = (List<EventModel>)eventMockRepository.find(EventModel.class, "userid=" + userid.toString());
 
-
-            //responseString = GsonHelper.getGson().toJson(peopleList);
-            responseCode = 200;
+            if (events != null) {
+                responseString = GsonHelper.getGson().toJson(events);
+                responseCode = 200;
+            }
+            else
+            {
+                Error error = new Error();
+                error.setMessage("Failed to list events!");
+                responseString = GsonHelper.getGson().toJson(error);
+                responseCode = 400;
+            }
         } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "createEvent") && request.method().equals("POST")) {
-            int startOfData = uri.getPath().lastIndexOf('/');
-            String name = uri.getPath().substring(startOfData + 1);
-            //peopleList.add(new Person(name));
+            int useridIndex = uri.toString().indexOf("userid") + 7; // len(id=)
+            int useridEndIndex = uri.toString().indexOf('&', useridIndex);
+            Long userid = Long.parseLong(uri.toString().substring(useridIndex, useridEndIndex));
 
-            responseString = "";
-            responseCode = 200;
-        } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "modifyEvent") && request.method().equals("POST")) {
-            int startOfData = uri.getPath().lastIndexOf('/');
-            String name = uri.getPath().substring(startOfData + 1);
-            //peopleList.add(new Person(name));
+            int nameIndex = uri.toString().indexOf("name") + 5; // len(name=)
+            int nameEndIndex = uri.toString().indexOf('&', nameIndex);
+            String name = uri.toString().substring(nameIndex, nameEndIndex);
 
-            responseString = "";
-            responseCode = 200;
+            int dateIndex = uri.toString().indexOf("date") + 5; // len(date=)
+            Date date = GsonHelper.getGson().fromJson(uri.toString().substring(dateIndex), Date.class);
+
+            EventModel event = new EventModel(name, date);
+            event.setUserid(userid);
+            Long id = eventMockRepository.save(event);
+            if ( id != 0L ) {
+                event.setId(id);
+                responseString = GsonHelper.getGson().toJson(event);
+                responseCode = 200;
+            }
+            else
+            {
+                Error error = new Error();
+                error.setMessage("Failed to create event!");
+                responseString = GsonHelper.getGson().toJson(error);
+                responseCode = 400;
+            }
+
+        } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "modifyEvent") && request.method().equals("POST")) {;
+            int idIndex = uri.toString().indexOf("id") + 3; // len(id=)
+            int idEndIndex = uri.toString().indexOf('&', idIndex);
+            Long id = Long.parseLong(uri.toString().substring(idIndex, idEndIndex));
+
+            int nameIndex = uri.toString().indexOf("name") + 5; // len(name=)
+            int nameEndIndex = uri.toString().indexOf('&', nameIndex);
+            String name = uri.toString().substring(nameIndex, nameEndIndex);
+
+            int dateIndex = uri.toString().indexOf("date") + 5; // len(date=)
+            Date date = GsonHelper.getGson().fromJson(uri.toString().substring(dateIndex), Date.class);
+
+            EventModel event = new EventModel(name, date);
+            event.setId(id);
+
+            EventModel updatedEvent = (EventModel)eventMockRepository.update(EventModel.class, id, event);
+            if (updatedEvent != null) {
+                event.setId(id);
+                responseString = GsonHelper.getGson().toJson(event);
+                responseCode = 200;
+            } else {
+                Error error = new Error();
+                error.setMessage("Failed to modify event!");
+                responseString = GsonHelper.getGson().toJson(error);
+                responseCode = 400;
+            }
         } else {
             responseString = "ERROR";
             responseCode = 503;

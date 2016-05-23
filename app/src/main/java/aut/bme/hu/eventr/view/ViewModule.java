@@ -33,9 +33,7 @@ public class ViewModule {
 
     @Provides
     @Singleton
-    public LoginPresenter getLoginPresenter() {
-        return new LoginPresenter();
-    }
+    public LoginPresenter getLoginPresenter() { return new LoginPresenter(); }
 
     @Provides
     @Singleton

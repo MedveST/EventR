@@ -2,6 +2,7 @@ package aut.bme.hu.eventr.repository.mock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +27,17 @@ public class MockRepository implements Repository {
     }
 
     @Override
+    public Object update(Class<?> type, Long id, Object obj)
+    {
+        Object storedObj = findById(type, id);
+        if (storedObj != null) {
+            storedObj = obj;
+            return storedObj;
+        }
+        return null;
+    }
+
+    @Override
     public void delete(Object obj)
     {
         try {
@@ -39,6 +51,21 @@ public class MockRepository implements Repository {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteAll(Class<?> type)
+    {
+        Collection<Object> objs = database.values();
+        List<Object> toRemove = new ArrayList<Object>();
+        for (Object obj : objs)
+        {
+            if (type.isInstance(obj))
+            {
+                toRemove.add(obj);
+            }
+        }
+
+        objs.removeAll(toRemove);
     }
 
     @Override

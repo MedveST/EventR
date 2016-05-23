@@ -2,9 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
+    signingConfigs {
+        eventr {
+            keyAlias 'eventr'
+            keyPassword 'eventr'
+            storeFile file('eventr.keystore')
+            storePassword 'eventr'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
         applicationId "aut.bme.hu.eventr"
         minSdkVersion 19
@@ -16,17 +23,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             buildConfigField "boolean", "IS_MOCK", "false"
         }
         debug {
             buildConfigField "boolean", "IS_MOCK", "false"
         }
-
         mockRelease {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             buildConfigField "boolean", "IS_MOCK", "true"
         }
         mockDebug {
@@ -63,16 +67,19 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
-
-   // compile "com.squareup.okhttp3:okhttp:$okhttp_version"
-
-   // compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    // compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
-
     compile "com.google.code.gson:gson:$gson_version"
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     //compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
 
-    testCompile "junit:junit:$junit_version"
+    testCompile 'junit:junit:4.12'
+
+    testCompile('org.robolectric:shadows-support-v4:3.0-rc3') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+    testCompile "org.mockito:mockito-core:1.10.19"
 }

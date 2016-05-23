@@ -1,6 +1,7 @@
 package aut.bme.hu.eventr.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.dsl.Table;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -10,10 +11,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @ApiModel(description = "")
+@Table
 public class UserModel
 {
     @SerializedName("id")
-    private BigDecimal id = null;
+    private Long id = null;
 
     @SerializedName("email")
     private String email = null;
@@ -35,10 +37,10 @@ public class UserModel
      * Unique identifier representing a specific user
      **/
     @ApiModelProperty(value = "Unique identifier representing a specific user")
-    public BigDecimal getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(BigDecimal id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

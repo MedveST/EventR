@@ -59,10 +59,9 @@
         android:layout_height="wrap_content"
         android:text="Login/Sign Up"
         android:id="@+id/loginButton"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/loginEditPassword"
-        android:layout_alignEnd="@+id/loginEditPassword"
-        android:layout_alignLeft="@+id/loginEditPassword"
-        android:layout_alignStart="@+id/loginEditPassword" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/loginEditPassword"
+        android:layout_marginBottom="121dp"
+        android:layout_alignEnd="@+id/loginEditPassword"/>
 
 </RelativeLayout>

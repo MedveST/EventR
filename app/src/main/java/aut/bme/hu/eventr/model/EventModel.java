@@ -1,6 +1,7 @@
 package aut.bme.hu.eventr.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.dsl.Table;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,10 +13,14 @@ import io.swagger.annotations.ApiModelProperty;
 
 // Serializable required for passing in a parcel
 @ApiModel(description = "")
+@Table
 public class EventModel implements Serializable
 {
     @SerializedName("id")
-    private BigDecimal id = null;
+    private Long id = null;
+
+    @SerializedName("userid")
+    private Long userid = null;
 
     @SerializedName("title")
     private String title = null;
@@ -38,11 +43,23 @@ public class EventModel implements Serializable
      * Unique identifier representing a specific product event
      **/
     @ApiModelProperty(value = "Unique identifier representing a specific product event")
-    public BigDecimal getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(BigDecimal id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+
+    /**
+     * Unique identifier representing the owner user of the event
+     **/
+    @ApiModelProperty(value = "Unique identifier representing the owner user of the event")
+    public Long getUserid() {
+        return userid;
+    }
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
 
@@ -81,6 +98,7 @@ public class EventModel implements Serializable
         }
         EventModel event = (EventModel) o;
         return Objects.equals(id, event.id) &&
+                Objects.equals(userid, event.userid) &&
                 Objects.equals(title, event.title) &&
                 Objects.equals(date, event.date);
     }
@@ -96,6 +114,7 @@ public class EventModel implements Serializable
         sb.append("class Event {\n");
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    userid: ").append(toIndentedString(userid)).append("\n");
         sb.append("    title: ").append(toIndentedString(title)).append("\n");
         sb.append("    date: ").append(toIndentedString(date)).append("\n");
         sb.append("}");

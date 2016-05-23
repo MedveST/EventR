@@ -2,9 +2,13 @@ package aut.bme.hu.eventr.network.mock;
 
 import android.net.Uri;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import aut.bme.hu.eventr.EventRApplication;
 import aut.bme.hu.eventr.model.UserModel;
+import aut.bme.hu.eventr.network.Error;
 import aut.bme.hu.eventr.network.GsonHelper;
 import aut.bme.hu.eventr.network.NetworkConfig;
 import aut.bme.hu.eventr.repository.Repository;
@@ -15,18 +19,11 @@ import okhttp3.Response;
 public class UserMockRequestProcessor {
 
     @Inject
-    static Repository mockRepository;
-    //static List<Person> peopleList = new ArrayList<>();
-    //static boolean isInitialised = false;
+    static Repository userMockRepository;
 
-    //public static Person testP1 = new Person("Network Test 1");
-    //public static Person testP2 = new Person("Network Test 2");
-
-    public static UserModel login(String email, String pass)
+    public UserMockRequestProcessor()
     {
-        // TODO
-        // mockRepository.find(UserModel.class.getClass(), "email="+email);
-        return null;
+        EventRApplication.injector.inject(this);
     }
 
     public static Response process(Request request) {
@@ -42,20 +39,31 @@ public class UserMockRequestProcessor {
             String email = uri.getPath().substring(emailIndex, emailEndIndex);
 
             int passIndex = uri.getPath().indexOf("pass") + 5; // len(pass=)
-            int passEndIndex = uri.getPath().indexOf('&', passIndex);
-            String pass = uri.getPath().substring(passIndex, passEndIndex);
+            String pass = uri.getPath().substring(passIndex);
 
-           // eventMockRepository
+            List<UserModel> users = (List<UserModel>)userMockRepository.find(UserModel.class, "email=" + "'" + email + "'");
+            UserModel user = null;
+            if (users.size() == 1)
+            {
+                user = users.get(0);
+            }
+            else
+            {
+                user = new UserModel(email, pass);
+                userMockRepository.save(user);
+            }
 
-                   // responseString = GsonHelper.getGson().toJson(peopleList);
-            responseCode = 200;
-        } else if (uri.getPath().startsWith(NetworkConfig.ENDPOINT_PREFIX + "people/add") && request.method().equals("GET")) {
-            int startOfData = uri.getPath().lastIndexOf('/');
-            String name = uri.getPath().substring(startOfData + 1);
-           // peopleList.add(new Person(name));
-
-            responseString = "";
-            responseCode = 200;
+            if ( user != null ) {
+                responseString = GsonHelper.getGson().toJson(user);
+                responseCode = 200;
+            }
+            else
+            {
+                Error error = new Error();
+                error.setMessage("Failed to create event!");
+                responseString = GsonHelper.getGson().toJson(error);
+                responseCode = 400;
+            }
         } else {
             responseString = "ERROR";
             responseCode = 503;
