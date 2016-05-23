@@ -4,4 +4,7 @@ public interface LoginView {
 
     void leaveScreen();
 
+    void setEmailText(String s);
+
+    void setPassText(String s);
 }

@@ -13,4 +13,11 @@
     tools:context="aut.bme.hu.eventr.view.CalendarActivity"
     tools:showIn="@layout/activity_calendar">
 
+    <CalendarView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendarView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>
